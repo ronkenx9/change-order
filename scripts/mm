@@ -1,0 +1,2 @@
+#!/bin/sh
+exec uv run -q --no-project --with requests python -I "$(dirname "$0")/mm.py" "$@"

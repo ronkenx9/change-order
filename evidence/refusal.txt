@@ -1,0 +1,2 @@
+Answer to card A1 on bridge e1a4cec7-9cef-4806-ab0e-f18300d1e38f refused (NOT_AUTHORIZED): You may not address this agent, so you may not answer it.
+Answer to card A1 on bridge e1a4cec7-9cef-4806-ab0e-f18300d1e38f refused (NOT_AUTHORIZED): You may not address this agent, so you may not answer it.

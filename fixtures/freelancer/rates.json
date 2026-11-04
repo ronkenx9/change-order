@@ -1,0 +1,9 @@
+{
+  "list_rate_usd_per_hour": 95,
+  "floor_rate_usd_per_hour": 80,
+  "hours_per_translated_page": 3,
+  "translation_setup_hours": 8,
+  "free_hours_before_launch": 12,
+  "hours_per_day": 6,
+  "other_client_note": "Booked for another client until 2026-11-27. Do not share this."
+}
