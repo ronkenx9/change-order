@@ -113,6 +113,7 @@ Screens and logs are in `evidence/`.
 - A search of the room for the private figures and notes found none. The privacy check card now does this in the room after every deal, and flags a hit by name in red (tested offline against planted leaks such as "$2,000", "2k", "Dec 9", "$95/h" and "booked until November 27").
 - Maya's private note changed the result: 6 pages at $2,470 instead of 4 at $1,900. The note is only in her direct messages (`evidence/maya-private-steering.txt`), and the room transcript has no trace of it.
 - After both signed, Maya's ledger and Theo's invoice were each updated in their own folder only (`evidence/maya-books-after.md`, `evidence/theo-invoice-after.md`).
+- In one run the agents posted their fingerprints without mentioning each other, so neither woke up to record the deal. The instructions now require the mention. A full run after that fix finished on its own, with books, the room document and the privacy card, and no message from either person after the request (`evidence/room-transcript-no-nudge.txt`).
 - Maya pressing Stop on Theo's agent, while his card was waiting, did not stop it. No refusal is shown to her, though. The press just has no effect.
 
 ## Limits
