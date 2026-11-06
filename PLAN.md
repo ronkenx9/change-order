@@ -61,3 +61,9 @@ Checked in the real Mattermost app (2026-11-04, `evidence/ui/`):
 Still not checked:
 - Whether a command outside the rules that targets the other side's folder would be stopped by anything but the card.
 - A run with the agents on separate machines.
+
+## Upgrades (2026-11-06, verified in one run through the Mattermost API)
+- Private steering: Maya DMs her agent; it runs `steer.py`, which writes `guidance.json`; `check_offer.py` reads it. Result moved from 4 pages $1,900 to 6 pages $2,470. Bug found on the way: steer wrote the wrong key and the check ignored it.
+- Books: after matching fingerprints each agent runs `record.py` in its own folder. Maya's ledger and Theo's invoice and schedule update.
+- Privacy check: `scripts/privacy_check.py --wait` posts counts per side after the room document lands. 7 + 7 terms, 0 found.
+- Clicked through in the real app (01:08–01:12 WAT): DM steering, both own-card approvals, books, privacy card. Screens in evidence/ui/.

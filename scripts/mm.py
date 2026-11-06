@@ -67,6 +67,41 @@ def say(handle, text):
     print("say", handle, r.status_code, "" if r.ok else r.text[:200])
 
 
+def dm(handle, text):
+    """Message your own agent privately, as in the app's direct messages."""
+    s = session(handle)
+    pair = [user_id(s, handle), user_id(s, f"{handle}-agent")]
+    cid = s.post(f"{MM}/channels/direct", json=pair).json()["id"]
+    r = s.post(f"{MM}/posts", json={"channel_id": cid, "message": text})
+    print("dm", handle, r.status_code, "" if r.ok else r.text[:200])
+
+
+def clear_dm(handle):
+    """Delete the history between an owner and their agent, so a fresh demo starts empty."""
+    r = requests.post(f"{MM}/users/login", json={"login_id": ENV["MATTERMOST_ADMIN_USER"],
+                                                  "password": ENV["MATTERMOST_ADMIN_PASSWORD"]})
+    r.raise_for_status()
+    admin = requests.Session()
+    admin.headers["Authorization"] = "Bearer " + r.headers["Token"]
+    pair = [user_id(admin, handle), user_id(admin, f"{handle}-agent")]
+    cid = admin.post(f"{MM}/channels/direct", json=pair).json()["id"]
+    posts = admin.get(f"{MM}/channels/{cid}/posts", params={"per_page": 200}).json()["order"]
+    for pid in posts:
+        admin.delete(f"{MM}/posts/{pid}")
+    print("clear-dm", handle, len(posts))
+
+
+def show_dm(handle, limit=10):
+    s = session(handle)
+    pair = [user_id(s, handle), user_id(s, f"{handle}-agent")]
+    cid = s.post(f"{MM}/channels/direct", json=pair).json()["id"]
+    posts = s.get(f"{MM}/channels/{cid}/posts", params={"per_page": int(limit)}).json()
+    for pid in reversed(posts["order"]):
+        p = posts["posts"][pid]
+        who = handle if p["user_id"] == pair[0] else "agent"
+        print(f"[{datetime.fromtimestamp(p['create_at'] / 1000):%H:%M:%S}] {who}: {p['message'][:400]}")
+
+
 def show(limit=30, full=False):
     s = session("maya")
     posts = s.get(f"{MM}/channels/{channel()}/posts", params={"per_page": limit}).json()
@@ -118,4 +153,4 @@ def drive(seconds="150"):
 
 if __name__ == "__main__":
     cmd, *args = sys.argv[1:]
-    {"new": new, "archive-old": archive_old, "add": add, "say": say, "press": press, "drive": drive, "show": lambda *a: show(*(int(x) for x in a))}[cmd](*args)
+    {"new": new, "dm": dm, "clear-dm": clear_dm, "show-dm": show_dm, "archive-old": archive_old, "add": add, "say": say, "press": press, "drive": drive, "show": lambda *a: show(*(int(x) for x in a))}[cmd](*args)

@@ -4,3 +4,6 @@ node_modules/
 *.log
 .DS_Store
 fixtures/*/signed/
+fixtures/*/books/
+fixtures/client/guidance.json
+__pycache__/

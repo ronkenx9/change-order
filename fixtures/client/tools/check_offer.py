@@ -1,10 +1,16 @@
-"""Check an offer against Maya's private limits. Prints only a verdict for the agent."""
+"""Check an offer against Maya's private limits. Prints only a verdict for the agent.
+
+Maya's private steering (guidance.json, written by steer.py) overrides the defaults.
+"""
 import argparse
 import json
 from datetime import date
 from pathlib import Path
 
-budget = json.loads((Path(__file__).parent.parent / "budget.json").read_text())
+home = Path(__file__).parent.parent
+budget = json.loads((home / "budget.json").read_text())
+if (home / "guidance.json").exists():
+    budget.update(json.loads((home / "guidance.json").read_text()))
 p = argparse.ArgumentParser()
 p.add_argument("--price", type=int, required=True)
 p.add_argument("--launch", required=True)
